@@ -9,7 +9,7 @@ click the `▮•▮` mark in the bar and the game window opens.
 ## Install
 
 ```bash
-omarchy plugin enable io.github.jeffsauer.omapong --section center
+omarchy plugin add https://github.com/jeffsauer/omapong-bar-widget --enable
 ```
 
 ## Playing
