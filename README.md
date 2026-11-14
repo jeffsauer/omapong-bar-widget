@@ -18,8 +18,6 @@ click the `▮•▮` mark in the bar and the game window opens.
 
 ## Install
 
-Copy the plugin's own files into the shell's plugin directory and enable it:
-
 ```bash
 omarchy plugin enable io.github.jeffsauer.omapong --section center
 ```
