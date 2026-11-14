@@ -1,0 +1,22 @@
+{
+  "schemaVersion": 1,
+  "id": "io.github.jeffsauer.omapong",
+  "name": "Omapong",
+  "version": "2.0.0",
+  "author": "Jeff Sauer",
+  "license": "MIT",
+  "description": "A Pong-style game as an Omarchy bar widget. Click the paddles in the bar to open the game; a click outside dismisses it mid-round, resumable where it left off.",
+  "kinds": [
+    "bar-widget"
+  ],
+  "entryPoints": {
+    "barWidget": "BarWidget.qml"
+  },
+  "barWidget": {
+    "displayName": "Omapong",
+    "description": "Open the Omapong game.",
+    "category": "Games",
+    "allowMultiple": false,
+    "defaultSection": "right"
+  }
+}
