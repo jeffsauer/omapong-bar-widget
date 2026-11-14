@@ -4,17 +4,7 @@ Classic Pong style game with a few twists made specifically for Omarchy Linux
 and Quickshell, fully implemented in QML. It ships as an Omarchy bar widget:
 click the `▮•▮` mark in the bar and the game window opens.
 
-```
-╔══════════════════════════════════════════════════╗
-║           ╭───────────────────────────╮          ║
-║           │  3        27        2     │          ║
-║ ▓         │  you     rally      ai    │        ▓ ║
-║ ▓                     ●               │        ▓ ║
-║ ▓                                     │        ▓ ║
-║           ╰───────────────────────────╯          ║
-║ spacebar - serve/pause, w/s - move paddle        ║
-╚══════════════════════════════════════════════════╝
-```
+![Preview Image](https://github.com/jeffsauer/omapong-bar-widget/blob/main/preview.png)
 
 ## Install
 
