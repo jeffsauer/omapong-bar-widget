@@ -22,89 +22,40 @@ Copy the plugin's own files into the shell's plugin directory and enable it:
 
 ```bash
 ./sync.sh                                    # rsync + validate + reloadPlugins
-omarchy plugin enable io.github.jeffsauer.omapong --section right
-```
-
-A symlink is deliberately not used: `omarchy plugin validate` rejects a
-symlinked plugin folder, and a plain copy is what a published third-party
-plugin ships as anyway. `sync.sh` installs only the plugin's own files — the
-development harness, the original standalone game, and this README stay here.
-
-The shell watches this directory and reloads a saved plugin immediately. If an
-edit ever breaks a panel instance (an incubation error leaves the old one in
-place), a plain reload won't recover it — restart the shell for real:
-
-```bash
-omarchy-restart-shell
+omarchy plugin enable io.github.jeffsauer.omapong --section center
 ```
 
 ## Playing
 
-The game always opens (or reopens) paused behind a card, centered in the
-court's lower half — the span between the centre line and the bottom line
-— "click to begin" for a fresh round, "click to continue" for one waiting
-mid-round. Click the playfield or press `Space` to start. On a fresh
-summon the **OMAPONG** wordmark stands on the centre line, its baseline
-right on the court's midline: a logo drawn as a grid of square pixel
-cells — one line, sized up to the largest cell that fits the word
-inside the court's width, and graded from a bright top row to a dark
-baseline, all built off the live theme's foreground — the same blocky
-terminal style as the omarchy.org wordmark, which is built from exactly
-that kind of grid. It clears the moment the round begins — on the click
-to begin, or on the first serve if a serve somehow lands first. A fresh
-summon opens into serve standby: whoever holds the opening serve takes
-it from there. The
-paddles wait it out at the court's thirds — yours parked in the lower
-third, the machine full-height in the pocket between the scoreboard
-shelf and the wordmark — so nothing stands in front of the logo. The
-opening serve marks out inside that same pocket.
+The linux username is used for the human player name, and is on the left.
+The system hostname is used for the computer player name, and is on the right.
+
+The gane plays like the classic Pong game... with a few twists. Starts off slow
+and steady, the speed of the ball gradually increases.  On every multiple of 15
+hits during a rally, an additional fresh ball is added into play, up to six total.
+The round ends when no balls are left in play.  The first player to win 11
+rounds wins the match.
 
 | Input | Action |
 |---|---|
-| `W` / `S`, `Up` / `Down` | move the left paddle (also while positioning a serve) |
-| `Space` | serve during standby (player's turn); pause / resume in a rally; restart after the round ends |
-| Click | pause / resume (the game also pauses itself whenever it loses focus or is hidden away) |
-| `R`, `Enter` | restart after the round ends |
-| `M` | mute / unmute the sound effects |
-| `Escape` | mid-round, raises an **"Abandon current game (Y/N)?"** prompt: `y` or **Yes** resets to a fresh game and closes the panel, `n` or **No** (or a second `Escape`) drops the question and keeps playing. Before the first serve, or once the round is over, it closes without asking — as does clicking the bar mark, which keeps the round where it was |
+| `W` / `S` | move the left player paddle up or down |
+| `Space` | serves the ball, pauses / resumes a rally |
+| Mouse Click | pause / resume |
+| `M` | mute / unmute sound effects |
+| `Escape` | mid-round, raises a confirmation dialog to quit the game |
 
-First to 11 points takes the round, and a rally ends only when the last
-ball in play crosses an end line: after that the game holds the score and
-goes to **serve standby** — no ball in play, both paddles free to move.
-The loser of the rally that just ended — the side that conceded its
-final ball — always serves next, and at the start of a match a random
-side opens. A player serve is yours to place: a soft ghost ball pulses
-against your paddle as you w/s to any height you like, and `Space`
-launches the serve from exactly there. The machine does the same in its
-own time: it picks a mark, walks its paddle there, settles a beat, and
-fires without asking anyone. Ball,
-paddle, and AI speed scale with the total score, and the ball speeds up
-through a rally. The match is named for this machine: the scoreboard pairs your Linux
-username with the system hostname, each name printed under its own score
-inside a rounded scoreboard plate — hung 20px below the court's top line
-and outlined in the same grid-line style — that keeps the centre line
-from crossing the rally counter. All three numbers — both scores and the counter — sit on
-one shared baseline. When either score changes, that number flares, and
-the rally counter flares on every stroke: each gets a blurred halo of its
-colour plus a small scale pop, one second long.
-
-Rallies crowd up as they run. Every 15 strokes of a rally, a fresh ball
-enters play at a random height on the centre line and leaves in a random
-direction — and once more than one ball is live, the counter's label
-underneath it says so (`rally · 3 balls`). A miss retires just its own
-ball and scores a point; the rally carries on with whatever balls
-survive, so one long rally can score several points at once, and a side
-under pressure concedes them in bunches. Chaos tops out at six balls.
+## Competitive Game Logic
 
 The machine tracks the ball near-exactly, so the round is rubber-banded to
-keep it a contest — and the rubber band now keys on a balance line, not the
+keep it competitive — and the rubber band now keys on a balance line, not the
 raw score. The line is the share of the points the game hands you by design:
 60%. Every catch-up term reads your distance from that line. Short of it,
 your paddle moves faster and visibly stretches (capped at 80 px), the
 machine's aim error — re-rolled at every stroke you play, and growing with
 the length of the rally — eventually makes it miss, and its paddle loses
 speed. The machine also swings softer than you: its returns leave the paddle
-at 83% your speed, slower and flatter, so a crowded field stays coverable.
+at 83% your speed, slower and flatter, so a crowded field stays cover-able.
+
 Fall two points short of the line and the catch-up grows: your serve also
 leaves your paddle hotter — the other side gets far less time to set up its
 return. Get past the line, though, and the same terms turn on you: the
@@ -112,20 +63,16 @@ machine tracks tighter, chases quicker, and hot serves come against you, so
 a lead is earned every point of the way and never rides out on autopilot.
 The net effect is the point: on any given point you win roughly six in ten,
 whatever the scoreboard says — a struggling player gets nudged back into the
-round, and a runaway leader meets the machine at its best. Measured across
-hundreds of points, a solid-but-human player lands near five and a half to
-six in ten, and even flawless play tops out near seven — the catch-up keeps
-a paddle's worth of cover in reserve for whoever needs it. Rallies are
-paced to build: they run about a minute, and two things force the eventual
+round, and a runaway leader meets the machine at its best. Rally durations were
+targeted to average about one minute, and two things force the eventual
 miss — the aim wobble, and the extra balls that pile up past stroke fifteen
 until whoever is playing worse simply cannot cover every line at once. A
 rally always resolves rather than grinding on forever.
 
 The ball has three voices: a ping off either paddle, a low thud off the top
 or bottom wall, and a whoosh when a ball slips past either paddle — both
-sides' misses sound the same. The game always opens muted — it pops out of
-the bar uninvited — and `M` unmutes or mutes at any time; the field's
-bottom bar shows which state you are in.
+sides' misses sound the same. The game always opens muted, and `M` unmutes
+or mutes at any time; the bottom status bar shows which state you are in.
 
 ## Layout
 
@@ -197,6 +144,3 @@ omarchy-shell shell toggle io.github.jeffsauer.omapong '{}'
 omarchy-shell shell hide   io.github.jeffsauer.omapong
 ```
 
-## Original licence notes
-
-Game logic and tuning constants carried over unchanged from `omapong.qml`.
