@@ -6,6 +6,10 @@ click the `▮•▮` mark in the bar and the game window opens.
 
 ![Preview Image](https://github.com/jeffsauer/omapong-bar-widget/blob/main/preview.png)
 
+
+https://github.com/user-attachments/assets/f5b7928c-cf26-472c-9017-f698120cd182
+
+
 ## Install
 
 ```bash
