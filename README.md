@@ -16,6 +16,11 @@ https://github.com/user-attachments/assets/f5b7928c-cf26-472c-9017-f698120cd182
 omarchy plugin add https://github.com/jeffsauer/omapong-bar-widget --enable
 ```
 
+## Remove
+```bash
+omarchy plugin remove io.github.jeffsauer.omapong
+```
+
 ## Playing
 
 The linux username is used for the human player name, and is on the left.
